@@ -27,17 +27,28 @@ def _route(d, args):
 
     return args
 
-def _flatten(l):
+def _split_list(l, v):
+    if v in l:
+        i = l.index(v)
+        return l[:i], l[i+1:]
+    else:
+        return l, None
+
+def _get_args_options():
+    return _split_list(sys.argv[1:], '--')
+
+def _flatten_list(l):
     c = chain.from_iterable(l)
     return list(c)
 
-def _preproc_args(args):
+def _split_flatten(args):
     splitted_args = map(str.split, args)
-    return _flatten(splitted_args)
+    return _flatten_list(splitted_args)
 
 def main(routing, cmd = None):
-    args = _route(routing, sys.argv[1:])
-    args = _preproc_args(args)
+    args, options = _get_args_options()
+    args = _route(routing, args)
+    args = _split_flatten(args)
 
     if cmd:
         run([*cmd.split(), *args])
