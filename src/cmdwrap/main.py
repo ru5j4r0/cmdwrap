@@ -1,18 +1,12 @@
 import sys
 from subprocess import run
-from itertools import chain
-
-def _head_rest(head = None, *rest):
-    return head, list(rest)
-
-def _value_type(d, key):
-    return (v := d[key]), type(v)
+import piest
 
 def _route(d, args):
-    head, rest = _head_rest(*args)
+    head, rest = piest.list.head_rest(args)
 
     if head in d.keys():
-        v, vt = _value_type(d, head)
+        v, vt = piest.dict.value_type(d, head)
 
         if vt == str:
             args[0] = v
@@ -27,28 +21,13 @@ def _route(d, args):
 
     return args
 
-def _split_list(l, v):
-    if v in l:
-        i = l.index(v)
-        return l[:i], l[i+1:]
-    else:
-        return l, None
-
 def _get_args_options():
-    return _split_list(sys.argv[1:], '--')
-
-def _flatten_list(l):
-    c = chain.from_iterable(l)
-    return list(c)
-
-def _split_flatten(args):
-    splitted_args = map(str.split, args)
-    return _flatten_list(splitted_args)
+    return piest.list.divide(sys.argv[1:], '--')
 
 def main(routing, cmd = None):
     args, options = _get_args_options()
     args = _route(routing, args)
-    args = _split_flatten(args)
+    args = piest.list.split_flat(args)
 
     if cmd:
         run([*cmd.split(), *args])

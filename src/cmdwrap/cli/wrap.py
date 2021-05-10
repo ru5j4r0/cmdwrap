@@ -1,11 +1,7 @@
 import sys
 import os
 import stat
-
-def add_ux(file_name):
-    mode_old = os.stat(file_name).st_mode
-    mode_new = mode_old | stat.S_IXUSR
-    os.chmod(file_name, mode_new)
+import piest
 
 def template(cmd):
     return f"""#!/usr/bin/env python3
@@ -24,7 +20,7 @@ if __name__ == '__main__':
 
 def create_file(file_name, cmd):
     with open(file_name, 'w') as fd:
-        add_ux(file_name)
+        piest.file.add_xu(file_name)
         src = template(cmd)
         fd.write(src)
 
