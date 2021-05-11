@@ -27,7 +27,7 @@ def _get_args_options():
 def main(routing, cmd = None):
     args, options = _get_args_options()
     args = _route(routing, args)
-    args = piest.list.split_flat(args)
+    args = piest.list.splits(args)
 
     if cmd:
         run([*cmd.split(), *args])
