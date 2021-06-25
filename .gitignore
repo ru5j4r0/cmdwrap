@@ -1,4 +1,8 @@
 __pycache__/
-cmdwrap.egg-info/
-.venv
+*.egg-info/
 
+/.idea/
+/.venv/
+
+/build/
+/dist/

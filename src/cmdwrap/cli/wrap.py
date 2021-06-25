@@ -1,7 +1,7 @@
 import sys
 import os
 import stat
-import piest
+import piest.file as pfile
 
 def template(cmd):
     return f"""#!/usr/bin/env python3
@@ -20,7 +20,7 @@ if __name__ == '__main__':
 
 def create_file(file_name, cmd):
     with open(file_name, 'w') as fd:
-        piest.file.add_xu(file_name)
+        pfile.add_xu(file_name)
         src = template(cmd)
         fd.write(src)
 

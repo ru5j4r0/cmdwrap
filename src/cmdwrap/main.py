@@ -1,12 +1,13 @@
 import sys
 from subprocess import run
-import piest
+import piest.dict as pdict
+import piest.list as plist
 
 def _route(d, args):
-    head, rest = piest.list.head_rest(args)
+    head, rest = plist.head_rest(args)
 
     if head in d.keys():
-        v, vt = piest.dict.value_type(d, head)
+        v, vt = pdict.value_type(d, head)
 
         if vt == str:
             args[0] = v
@@ -22,12 +23,12 @@ def _route(d, args):
     return args
 
 def _get_args_options():
-    return piest.list.divide(sys.argv[1:], '--')
+    return plist.divide(sys.argv[1:], '--')
 
 def main(routing, cmd = None):
-    args, options = _get_args_options()
+    args, (option, *_) = _get_args_options()
     args = _route(routing, args)
-    args = piest.list.splits(args)
+    args = plist.flat_splits(args)
 
     if cmd:
         run([*cmd.split(), *args])
