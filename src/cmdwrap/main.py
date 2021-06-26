@@ -26,7 +26,7 @@ def _get_args_options():
     return plist.divide(sys.argv[1:], '--')
 
 def main(routing, cmd = None):
-    args, (option, *_) = _get_args_options()
+    args, options = _get_args_options()
     args = _route(routing, args)
     args = plist.flat_splits(args)
 
